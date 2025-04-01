@@ -53,4 +53,20 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// Obtener el progreso de un jugador específico por su player_id
+router.get("/:player_id", async (req, res) => {
+  const { player_id } = req.params;
+  try {
+    const [rows] = await pool.execute("SELECT * FROM game_progress WHERE player_id = ?", [player_id]);
+    if (rows.length > 0) {
+      res.json(rows[0]); // Devuelve el primer resultado encontrado
+    } else {
+      res.status(404).json({ message: "No se encontró progreso para este jugador" });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+
 module.exports = router;
