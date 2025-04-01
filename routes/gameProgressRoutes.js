@@ -28,12 +28,12 @@ router.get("/", async (req, res) => {
 });
 
 // Actualizar progreso de un jugador (U)
-router.put("/:id", async (req, res) => {
+router.put("/:player_id", async (req, res) => {
   const { id } = req.params;
   const { score, lives, time, levels } = req.body;
   try {
     await pool.execute(
-      "UPDATE game_progress SET score=?, lives=?, time=?, levels=?, last_update=NOW() WHERE id=?",
+      "UPDATE game_progress SET score=?, lives=?, time=?, levels=?, last_update=NOW() WHERE player_id=?",
       [score, lives, time, levels, id]
     );
     res.json({ message: "Progreso actualizado exitosamente" });
