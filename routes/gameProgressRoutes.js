@@ -29,18 +29,19 @@ router.get("/", async (req, res) => {
 
 // Actualizar progreso de un jugador (U)
 router.put("/:player_id", async (req, res) => {
-  const { id } = req.params;
+  const { player_id } = req.params;
   const { score, lives, time, levels } = req.body;
   try {
     await pool.execute(
       "UPDATE game_progress SET score=?, lives=?, time=?, levels=?, last_update=NOW() WHERE player_id=?",
-      [score, lives, time, levels, id]
+      [score, lives, time, levels, player_id]
     );
     res.json({ message: "Progreso actualizado exitosamente" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Eliminar progreso de un jugador (D)
 router.delete("/:id", async (req, res) => {
