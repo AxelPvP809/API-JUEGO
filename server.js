@@ -1,17 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const gameProgressRoutes = require("./routes/gameProgressRoutes"); // Ajusta el path si es diferente
+require("dotenv").config();
+
+const playerRoutes = require("./routes/playerRoutes");
+const gameProgressRoutes = require("./routes/gameProgressRoutes");
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
-// Aquí montas las rutas
-app.use("/api/progress", gameProgressRoutes);
+app.use("/players", playerRoutes);
+app.use("/game_progress", gameProgressRoutes);
 
-// Arranque del servidor
-const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
